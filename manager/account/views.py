@@ -129,14 +129,13 @@ def logout_view(request):
 def create_global_debt(date, user, total):
     try:
         latest_global_debt = Global_Debt.objects.filter(customer=user).latest('timeOfCreating')
-        newGlobalDebt = Global_Debt.objects.create(
+        Global_Debt.objects.create(
             customer = user,
             date = date,
             debt = latest_global_debt.debt + total,
-
         )
     except:
-        newGlobalDebt = Global_Debt.objects.create(
+        Global_Debt.objects.create(
             customer = user,
             date = date,
             debt = total
