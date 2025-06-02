@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'tables',
     'account',
-
+    "storage",
 ]
 
 MIDDLEWARE = [
