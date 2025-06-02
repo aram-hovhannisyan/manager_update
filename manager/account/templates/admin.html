@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'links' %}
+    <link rel="stylesheet" href="{% static 'tables/home.css' %}">
+
+{% endblock %}
+
+{% block 'title' %}
+    <title>{{ user.username }}'s Page</title>
+{% endblock %}
+
+{% block 'body' %}
+
+<form method="POST" id="addProductForm">
+    {% csrf_token %}
+    <div id="addProductDiv" >
+        <div id="ProductInputs"  style="height: 450px;">
+            <br>
+            <p>Ապրանքի անունը</p>
+            <input type="text" name="productName" style="display: block; width: 50%; margin: auto; height: 30px;"><br>
+            <p>Ապրանքի գինը</p>
+            <input type="number" name="productPrice" style="display: block; width: 50%; margin: auto; height: 30px;"><br>
+            <p>Հաճախորդ(ներ)</p>
+            <select name="customer" multiple style="width: 50%; height: 60px;">
+                <option value="all">all</option>
+                {% for i in Users %}
+                    <option value="{{i.username}}">{{i.username}}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <p>Մատակարարող</p>
+            <select name="supplier" style="width: 50%; height: 40px;">
+                {% for i in Suppliers %}
+                    <option value="{{i.username}}">{{ i.username }}</option>
+                {% endfor %}
+            </select><br><br>
+            <p>Ստացման Գին</p>
+            <input type="number" value='0' name="supPrice" style="display: block; width: 50%; margin: auto; height: 30px;"><br>
+            <button type="submit" id="saveButton" style="width: 50%;--c: rgb(93, 93, 202); height:40px;background-color: #3498db82;">Ավելացնել</button>
+        </div>
+    </div>
+</form>
+
+
+    <br><br><br><br><br>
+
+
+<form method="POST" action="/changeitemsname/">
+    {% csrf_token %}
+    <div id="addProductDiv" >
+
+        <div id="ProductInputs"  style="height: 250px;"><br>
+            <p>Ապրանքի ՀԻն Անունը</p>
+            <select name="fromName" style="width: 50%; height: 60px;">
+                {% for i in Uniq %}
+                    <option value="{{i.productName}}">{{i.productName}}</option>
+                {% endfor %}
+            </select><br><br>
+            <p>Ապրանքի Նոր Անունը</p>
+            <input type="text" name="toName" style="display: block; width: 50%; margin: auto; height: 30px;"><br>
+            <button type="submit" id="saveButton" style="width: 50%;--c: rgb(93, 93, 202); height:40px;background-color: #3498db82;">Հաստատել</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block 'scripts' %}
+
+<script src="{% static 'tables/multipleSelect.js' %}"></script>
+
+{% endblock %}

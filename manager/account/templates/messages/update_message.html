@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'links' %}
+  <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"> -->
+{% endblock %}
+
+{% block 'title' %}
+<title>Create Message</title>
+{% endblock%}
+
+{% block 'body' %}
+
+
+<div style="max-width: 800px; margin: auto; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <h1 style="text-align: center; color: #333;">Update Message</h1>
+    
+    <!-- Message update form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Textarea for message -->
+        <div style="margin-bottom: 20px;">
+            <label for="message" style="display: block; margin-bottom: 8px; font-weight: bold;">Message:</label>
+            <textarea id="message" name="message" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; overflow-wrap: break-word; word-wrap: break-word;">{{ message.message }}</textarea>
+        </div>
+
+        <!-- Checkbox list for users -->
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select Users:</label>
+            <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
+                {% for user in customer_usernames %}
+                    <label style="display: block; margin-bottom: 5px;">
+                        <input type="checkbox" name="selected_users" value="{{ user }}" 
+                        {% if user in message.to_users %}checked{% endif %}>
+                        {{ user }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div style="text-align: center;">
+            <button type="submit" style="padding: 10px 20px; background-color: #3273dc; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Update Message</button>
+        </div>
+    </form>
+</div>
+
+
+    <script>
+        // JavaScript function to select all checkboxes
+        function selectAll() {
+            const checkboxes = document.querySelectorAll('.user-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !checkbox.checked;
+            });
+        }
+    </script>
+{% endblock %}
+

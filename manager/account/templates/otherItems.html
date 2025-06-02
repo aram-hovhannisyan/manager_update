@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+
+{% block 'links' %}
+  <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+{% endblock %}
+
+{% block 'title' %}
+  <title>Employee Page</title>
+{% endblock%}
+
+{% block 'body' %}
+
+{% endblock %}
+
+
+
+
+{% block 'scripts' %}
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="{% static 'js/employee/toExcel.js' %}"></script>
+    <script src="{% static 'js/employee/sendOrder.js' %}"></script>
+    <script src="{% static 'js/employee/removeColumns.js' %}"></script>
+    <script src="{% static 'js/employee/renderOtherItems.js' %}"></script>
+{% endblock %}

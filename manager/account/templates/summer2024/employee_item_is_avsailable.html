@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'links' %}
+    <link rel="stylesheet" href="{% static 'tables/home.css' %}">
+{% endblock %}
+
+
+{% block 'title' %}
+  <title>Assortment</title>
+{% endblock%}
+
+{% block 'body' %}
+<table>
+    <thead>
+        <tr>
+            <th>Ապրանք</th>
+            <th>Առկա է</th>
+            <th>Փոխել</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{row.productName}}</td>
+            {% if row.is_available %}
+            <td style="background-color: green;">Այո</td>
+            {% else %}
+            <td style="background-color: red;">Ոչ</td>
+            {% endif %}
+            <td><a href="{%url 'togle_availability' row.productName %}"><button id="saveButton">Փոխել</button></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+
+
+{% block 'scripts' %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'links' %}
+    <link rel="stylesheet" href="{% static 'tables/home.css' %}">
+{% endblock %}
+
+
+{% block 'title' %}
+<title>Assortment</title>
+{% endblock %}
+
+{% block 'body' %}
+<div class="table-heading-div" style="background-color: rgba(13, 170, 13, 0.76);">
+    <a 
+    href="{% url 'supplier_endorse' user.id %}"
+    style="
+      text-decoration: none;
+      color: black;
+    " 
+    >
+    <h2 style="width: auto;">Ուղղումներ</h2>    
+    </a>
+  </div> 
+  <br><br><br>
+<table>
+    <thead style="word-wrap: break-word;">
+        <tr>
+            <th>Ապրանքի Անունը</th>
+            <th>Ապրանքի Գինը</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in items %}
+            <tr>
+                <td>{{i.productName}}</td>
+                <td>{{i.supPrice}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+
+{% endblock %}
+

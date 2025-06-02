@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'links' %}
+    <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+{% endblock %}
+
+{% block 'title' %}
+<title>Orders</title>
+{% endblock %}
+
+{% block header %}
+    <h1 style="color:white;">{{supplier.username}}</h1>
+{% endblock %}
+
+{% block 'body' %}
+<p id="supplier_id" page="{{page}}" hidden>{{supplier.id}}</p>
+
+{% endblock %}
+
+{% block 'scripts' %}
+    <script src="{% static 'js/supplier/setLink.js' %}"></script>
+    <script src="{% static 'js/employee/renderMyOrders.js' %}"></script>
+    <script src="{% static 'js/supplier/conectDrivers.js' %}"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="{% static 'js/supplier/supToExcel.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'links' %}
+  <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+{% endblock %}
+
+{% block 'title' %}
+  <title>Employee Page</title>
+{% endblock%}
+
+{% block 'body' %}
+<main>
+  <div class="table-heading-div">
+    <a
+    href="{% url 'mainItems' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+      <h1 style="width: auto;">Արտադրամաս</h1>
+    </a>
+  </div>
+  <br><br><br>
+  <div class="table-heading-div">
+    <a
+    href="{% url 'otherItems' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Այլ ապրանք</h1>
+    </a>
+  </div>
+  <br><br><br>
+  <div class="table-heading-div">
+    <a
+    href="{% url 'writing_big' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Գրենական</h1>
+    </a>
+  </div>
+  <br><br><br>
+  <div class="table-heading-div">
+    <a
+    href="{% url 'is_available' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Տեսականի</h1>
+    </a>
+  </div>
+  <br><br><br>
+    <div class="table-heading-div">
+    <a
+    href="{% url 'create_mesasge' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Նամակներ</h1>
+    </a>
+  </div>
+  <br><br><br>
+  <div class="table-heading-div">
+    <a
+    href="{% url 'totalPage' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Ընդհանուր</h1>
+    </a>
+  </div>   <br><br><br>
+
+  <div style="
+  width: 300px;
+  margin: auto;
+  background-color: rgba(0, 255, 255, 0.616);
+  text-align: center;
+  border: 1px solid black;
+  height: 560px;
+  border-radius: 25px;
+  ">
+  <br><br>
+    <h1>Ուղղումներ</h1>
+
+  {% for sup in suppliers %}
+  <br><br><br>
+  {% if sup.1 %}
+  <div class="table-heading-div" style="background-color: rgba(13, 170, 13, 0.76);">
+    <a
+    href="{% url 'supplier_endorse' sup.0.id %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h2 style="width: auto;">{{sup.0.username}}</h2>
+    </a>
+  </div>
+  {% else %}
+  <div class="table-heading-div" style="background-color: rgba(202, 30, 24, 0.637);">
+    <a
+    href="{% url 'supplier_endorse' sup.0.id %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h2 style="width: auto;">{{sup.0.username}}</h2>
+    </a>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+</main>
+
+
+{% endblock %}
+

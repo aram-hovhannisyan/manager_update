@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'links' %}
+
+<link rel="stylesheet" href="{% static 'tables/home.css' %}">
+
+{% endblock %}
+
+{% block 'title' %}
+<title>{{user.username}}'s Page</title>
+{% endblock %}
+
+
+{% block 'body' %}
+<div class="table-heading-div">
+    <h1>Գրենական</h1>
+</div>
+<br>
+<table class="responsive-table" style="text-align: center;">
+    <thead>
+        <tr>
+            <th style="text-align: center;">
+                Ապրանք
+            </th>
+            <th style="text-align: center;">
+                Քանակ
+            </th>
+            <th style="text-align: center;">
+                Գին
+            </th>
+            <th style="text-align: center;">
+                Ընդ...
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in Items %}
+        <tr>
+            <td class="productName" id="productName-{{i.id}}">
+                {{ i.productName }}
+            </td>
+            <td class="productCount">
+                <input type="number" name="inp" class="input{{i.id}} countInput" placeholder="0" value="">
+            </td>
+            <td data-title='productPrice' class="productPrice">
+                {{ i.productPrice }}
+            </td>
+            <td id="result-{{ i.id }}" class="totalPrice">
+                0
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr style="height: 60px;">
+            <td style="border-top: 2px solid black;">
+                <input type="date" id="inputDate" class="inputDate" name="date">
+            </td>
+            <td style="border-top: 2px solid black;" colspan="2">
+                <button id="saveButton" class="writing_save" type="button"
+                    style="height: 40px;">Ուղարկել</button>
+            </td>
+            <td style="border-top: 2px solid black;" id="total-sum"></td>
+        </tr>
+    </tfoot>
+</table>
+<br><br><br>
+{% endblock %}
+
+
+
+
+{% block 'scripts' %}
+<script src="{% static 'js/customer/customer.js' %}"></script>
+<script src="{% static 'js/customer/writing/writing_save.js' %}"></script>
+<script src="{% static 'js/customer/inputDate.js' %}"></script>
+{% endblock %}

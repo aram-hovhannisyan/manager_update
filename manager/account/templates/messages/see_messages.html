@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'links' %}
+  <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"> -->
+{% endblock %}
+
+{% block 'title' %}
+<title>Create Message</title>
+{% endblock%}
+
+{% block 'body' %}
+ 
+<div style="max-width: 800px; margin: auto;">
+    <h1 style="text-align: center; color: #333;">նախորդ Հայտարարությունները</h1>
+    <br>
+    <!-- Loop through the messages -->
+    {% for message in messages %}
+    <div style="background-color: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); overflow-wrap: break-word; word-wrap: break-word; max-width: 100%;">
+        <p><strong>From:</strong> {{ message.from_user.username }}</p>
+        <p><strong>Message:</strong> {{ message.message }}</p>
+        <br><br>
+        <p><strong>Sent:</strong> {{ message.sent }}</p>
+        {% if user.username not in message.seen_by %}
+        <div style="margin-top: 15px;">
+            <a href="{% url 'confirm_message' message.id %}" style="padding: 8px 12px; background-color: #3bd12d; color: #fff; text-decoration: none; border-radius: 5px;">Հաստատել</a>
+        </div>
+        {% else %}
+        <div style="margin-top: 15px;">
+            <p style="padding: 8px 12px; background-color: #12550c; color: #fff; text-decoration: none; border-radius: 5px;">Հաստատված </p>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
+

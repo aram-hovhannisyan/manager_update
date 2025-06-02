@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'links' %}
+  <link rel="stylesheet" href="{% static 'tables/responsive.css'%}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+{% endblock %}
+
+{% block 'title' %}
+<title>Create Message</title>
+{% endblock%}
+
+{% block 'body' %}
+
+
+    <div class="container" style="background-color:rgba(174, 236, 233, 0.445);">
+        <br><br><br>
+        <div style="margin: auto; width: 60%; border: 2px;" onclick="window.location.href='{% url 'recent_messages' %}'">
+            <u><h1 class="title">Տեսնել նախորդ հարտարարությունները</h1></u>
+        </div>
+
+        <br><br><br>
+        <form method="POST" style="margin: auto; width: 60%;">
+            {% csrf_token %}
+            
+            <!-- Textarea for message -->
+            <div class="field" >
+                <label class="title">Նոր հայտարարություն</label>
+                <br><br>
+                <div class="control">
+                    <textarea name="message" class="textarea" placeholder="Write your message here..."></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Ուղարկել</button>
+                </div>
+            </div>
+            <!-- Checkbox list for users -->
+            <div class="field">
+                <div class="control">
+                    <!-- Button to select all checkboxes -->
+                    <button type="button" class="button is-link is-light" onclick="selectAll()">Ընտրել Բոլորին</button>
+                    <br>
+                    {% for user in customers %}
+                        <label class="checkbox">
+                            <input type="checkbox" name="selected_users" value="{{ user }}" class="user-checkbox">
+                            {{ user }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Submit button -->
+
+        </form>
+    </div>
+
+    <script>
+        // JavaScript function to select all checkboxes
+        function selectAll() {
+            const checkboxes = document.querySelectorAll('.user-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = !checkbox.checked;
+            });
+        }
+    </script>
+{% endblock %}
+
