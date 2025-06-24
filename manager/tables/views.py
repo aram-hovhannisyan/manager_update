@@ -32,6 +32,8 @@ from django.shortcuts import redirect
 
 from account.forms import PaymantForm
 
+from storage.models import Tmp_Elements_Values, Storage_Element
+from storage.views import update_or_create_tmp_value
 # Create your views here.
 
 yerevan_schools = [
@@ -191,6 +193,8 @@ def save_table_data(request):
                 for row in data:
                     if row['productCount'] == '':
                         row['productCount'] = 0
+                    update_or_create_tmp_value(row['productName'], date, int(row['productCount']))
+
                     supTot = items.get(productName=row['productName']).supPrice * int(row['productCount'])
                     table_item = TableItem.objects.create(
                         table=table,
@@ -237,6 +241,7 @@ def save_table_data(request):
             create_debt(date=date, user=request.user, total=total, joined = False)
 
             return JsonResponse({'message': 'Table data saved successfully'})
+        
         if request.user.username == "27":#"Խանութ":
             table_name.insert(0, 1)
             table_name.insert(1, 1)
@@ -309,6 +314,7 @@ def save_table_data(request):
                     )
 
         create_debt(date=date, user=request.user, total=total, joined=True)
+        
 
         return JsonResponse({'message': 'Table data saved successfully'})
         # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -18,6 +18,12 @@ from tables.messages import (
     confirm_message
     )
 
+from storage.views import (
+    edit_elements,
+    register_elements, 
+    confirm_tmp_val
+)
+
 urlpatterns = [
     path('', views.login_view, name='login_view'),
     path('login/', views.login_view, name='login_view'),
@@ -123,6 +129,8 @@ urlpatterns = [
     path('see_messages/<int:user_id>/', see_messages, name='see_messages'),
     path('confirm_message/<int:message_id>/', confirm_message, name='confirm_message'),
 
-
+    path('storage/reg', register_elements, name="storage_reg"),
+    path('storage/edit_element/<int:element_id>/', edit_elements, name="edit_element"),
+    path('storage/confirm_tmp_val/<int:tmp_el_id>/', confirm_tmp_val, name="confirm_tmp_val"),
 
 ]

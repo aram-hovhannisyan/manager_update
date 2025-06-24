@@ -52,4 +52,8 @@ def sub(value, arg):
 def add(value, arg):
     return value + arg
 
-
+@register.filter
+def abs_sub(value, arg):
+    if value > arg:
+        return value - arg
+    return arg - value
