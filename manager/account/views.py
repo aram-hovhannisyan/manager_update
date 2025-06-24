@@ -54,7 +54,7 @@ from account.mydecorators import (
 )
 import time
 from django.http import JsonResponse
-
+from storage.views import update_or_create_tmp_value
 
 from .forms import SalaryForm, ChangeItemsName
 
@@ -2094,6 +2094,8 @@ def mistakes(request, table_id):
         kamo = User.objects.get(username="Կամո")
         for item in data:
             table_item = TableItem.objects.get(id=item["product_id"])
+            # if table_item.supplier == "Այլ.ապրանք"։
+            #     update_or_create_tmp_value(table_item.product_name, table_item.table.dateOfCreating, table_item.product_count - tochange_item.newCount)
             if table_item.customer in us1:
                 us = kamo
             elif table_item.customer in us2:
@@ -2231,6 +2233,7 @@ def endorse_suppliers_mistake(request, item_id):
         element = ordered_Itmes.objects.get(getId = item.id)
     except:
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # update_or_create_tmp_value(item.product_name, item.table.dateOfCreating, element.productCount - mistake.newCount)
     element.productCount = mistake.newCount
     element.save()
     mistake.delete()
@@ -2763,8 +2766,6 @@ def endorseChange(request, item_id):
         # next_week = date_object + timedelta(days=7)
 
         changeNext_oldDebt(date_object, tochange_item.customer, difference)
-
-
     except:
         pass
 
@@ -2775,6 +2776,8 @@ def endorseChange(request, item_id):
     )
     glob_debt.save()
     latest_global_debt.delete()
+
+    update_or_create_tmp_value(item.product_name, item.table.dateOfCreating, item.product_count - tochange_item.newCount)
 
     item.product_count = tochange_item.newCount
     item.total_price = tochange_item.newTotal

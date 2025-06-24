@@ -19,18 +19,19 @@ def update_or_create_tmp_value(element_name, date, new_val):
         return {"error": "Element with that name not found"}
 
     try:
+        # print("Tmp Element Exists!!!")
         obj = Tmp_Elements_Values.objects.get(element=element, date=date)
         obj.tmp_val += new_val
         obj.save()
         created = False
-    except Tmp_Elements_Values.DoesNotExist:
+    except:
+        print("new Tmp Element created!!!")
         obj = Tmp_Elements_Values.objects.create(
             element=element,
             date=date,
-            tmp_val=new_val
+            tmp_val=element.count + new_val
         )
         created = True
-
 
     return {
         "status": "created" if created else "updated",
@@ -49,19 +50,20 @@ def edit_elements(request, element_id):
         return JsonResponse({"status": "ok"})
     return JsonResponse({"error": "invalid method"}, status=405)
 
+
 def refresh_storage_element(element_id, new_count):
     obj = Storage_Element.objects.get(id=element_id)
     obj.count = new_count
     obj.save()
 
+
 def confirm_tmp_val(request, tmp_el_id):
     tmp_val_obj = Tmp_Elements_Values.objects.get(id=tmp_el_id)
     element = tmp_val_obj.element
 
-    element.count -= tmp_val_obj.tmp_val
+    element.count = tmp_val_obj.tmp_val
     element.save()
 
-    # Reset tmp_val
     tmp_val_obj.delete()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
