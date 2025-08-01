@@ -70,6 +70,7 @@
     </a>
   </div>
   <br><br><br>
+  {% if is_employee %}
   <div class="table-heading-div">
     <a
     href="{% url 'totalPage' %}"
@@ -81,7 +82,7 @@
     <h1 style="width: auto;">Ընդհանուր</h1>
     </a>
   </div>   <br><br><br>
-
+  {% endif %}
   <div class="table-heading-div">
     <a
     href="{% url 'storage_reg' %}"

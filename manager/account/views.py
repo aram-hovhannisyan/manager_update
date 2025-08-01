@@ -2256,11 +2256,16 @@ def employee(request):
     arr = []
     for sup in sups:
         arr.append([sup, len(supplier_Mistakes.objects.filter(supplier=sup)) == 0])
+
+    is_employee = False
+    if request.user.username == "Վարդգես":
+        is_employee = True
     # for i in TableItem.objects.filter(customer=User.objects.get(username='Կամո')):
         # print(i.supplier, i.product_name)
     return render(request, 'employee.html', {
         'is_waiting': is_waiting,
-        'suppliers': arr
+        'suppliers': arr,
+        "is_employee": is_employee
     })
 
 
@@ -2341,6 +2346,9 @@ def mainItems(request):
 def main_items_api(request):
     start_time = time.time()  # Record the start time
 
+    is_employee = False
+    if request.user.username == "Վարդգես":
+        is_employee = True
     schools = [
         # '148',
         '189', "50",
@@ -2370,9 +2378,9 @@ def main_items_api(request):
             "supplier_id": item.supplier.id,
             "porductName": item.porduct_name,
             'productCount': item.item.product_count,
-            'totalPrice': item.item.total_price,
+            'totalPrice': item.item.total_price if is_employee else 0,
             'table': item.item.table.id,
-            "supTotal": item.item.supTotal
+            "supTotal": item.item.supTotal if is_employee else 0
         } for item in tableRows
     ]
     bigTables_data = [{
@@ -2400,6 +2408,10 @@ def main_items_api(request):
 @employee_required
 def other_items_api(request):
     start_time = time.time()  # Record the start time
+
+    is_employee = False
+    if request.user.username == "Վարդգես":
+        is_employee = True
 
     schools = [
         # '148',
@@ -2430,9 +2442,9 @@ def other_items_api(request):
             "supplier_id": item.supplier.id,
             "porductName": item.porduct_name,
             'productCount': item.item.product_count,
-            'totalPrice': item.item.total_price,
+            'totalPrice': item.item.total_price if is_employee else 0,
             'table': item.item.table.id,
-            "supTotal": item.item.supTotal
+            "supTotal": item.item.supTotal if is_employee else 0
         } for item in tableRows
     ]
     bigTables_data = [{
@@ -2469,6 +2481,9 @@ def allCustomers(request):
     #     '90', '188', '196', '115', '44', "91", 'Դավիթ','Օհան','Գ.4-րդ', 'Գ.ավագ', 'Արա','Կամո','Գանձակ', 'Սարուխան','Էրանոս','Լիճք', 'Մ.1ին',
     #     'Մ.ավագ', 'Զոլ.2րդ', 'Զոլ.1ին', 'Ծովինար', "Խանութ", "Գավառ_ավագ","Գավառ_4րդ", "Գավառ_5րդ", "Գ_սարուխան", "Գ_հացառատ2","Գ_գանձակ"
     #     ]
+    is_employee = False
+    if request.user.username == "Վարդգես":
+        is_employee = True
 
     ohan_Users = ['Գ.4-րդ', 'Գ.ավագ', 'Արա']
     kamo_Users = ['Գանձակ', 'Սարուխան']
@@ -2485,7 +2500,7 @@ def allCustomers(request):
                 globDebts.append([cust, '---', len(WaitingForChange.objects.filter(customer=cust)) != 0])
                 continue
             latest_global = Global_Debt.objects.filter(customer=cust).latest('timeOfCreating')
-            globDebts.append([cust, latest_global.debt, len(WaitingForChange.objects.filter(customer=cust)) != 0])
+            globDebts.append([cust, latest_global.debt if is_employee else 0, len(WaitingForChange.objects.filter(customer=cust)) != 0])
             # print(cust.id)
         except:
             globDebts.append([cust, 0, len(WaitingForChange.objects.filter(customer=cust)) != 0])
@@ -2497,8 +2512,8 @@ def allCustomers(request):
         'allCustomers':allCustomers,
         'debts': globDebts,
         'allSuppliers': allSuppliers,
-        'ohanDebt': ohanDebt,
-        'kamoDebt': kamoDebt,
+        'ohanDebt': ohanDebt if is_employee else 0,
+        'kamoDebt': kamoDebt if is_employee else 0,
 
     })
 
@@ -3464,8 +3479,12 @@ def myOrders(request, supplier_id):
 
 @employee_or_supplier_required
 def ordered_tables_api(request, supplier_id, page_number):
-    start_time = time.time()  # Record the start time
+    # start_time = time.time()  # Record the start time
     # print(page_number, 'api')
+    is_employee = False
+    if request.user.username == "Վարդգես":
+        is_employee = True
+    
     schools = [
         # '148',
         '189', "50",
@@ -3503,7 +3522,7 @@ def ordered_tables_api(request, supplier_id, page_number):
     uniq_data = [
         {
             'productName': item["productName"],
-            'supPrice': item["supPrice"]
+            'supPrice': item["supPrice"] if is_employee else 0
         } for item in uniq
     ]
     tableRows_data = [
@@ -3550,8 +3569,8 @@ def ordered_tables_api(request, supplier_id, page_number):
 
     }
 
-    end_time = time.time()
-    execution_time = end_time - start_time
+    # end_time = time.time()
+    # execution_time = end_time - start_time
     # print(f"Execution Time: {execution_time} seconds")
 
     return JsonResponse(response_data, safe=False)

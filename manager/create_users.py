@@ -143,13 +143,13 @@ def create_users():
     # customers = ["161"]
     # customersPasswords = ["pass161word53"]
 
-    customers = ["50"]
-    customersPasswords = ["pass50word53"]
-    for customer, password in zip(customers, customersPasswords):
-        print(customer,'---', password)
-        customer_user = User.objects.create_user(username=customer, password=password)
-        customer_user.is_customer = True
-        customer_user.save()
+    # customers = ["50"]
+    # customersPasswords = ["pass50word53"]
+    # for customer, password in zip(customers, customersPasswords):
+    #     print(customer,'---', password)
+    #     customer_user = User.objects.create_user(username=customer, password=password)
+    #     customer_user.is_customer = True
+    #     customer_user.save()
 
     # supplier_user = User.objects.create_user(username='Գրենական', password='grenakan5864')
     # supplier_user.is_supplier = True
@@ -158,9 +158,9 @@ def create_users():
 
 
     # Create an employee user
-    # employee_user = User.objects.create_user(username='Վարդգես', password='vardgespassword1234')
-    # employee_user.is_employee = True
-    # employee_user.save()
+    employee_user = User.objects.create_user(username='Մայա', password='mayapassword1258')
+    employee_user.is_employee = True
+    employee_user.save()
 
     # # Create a supplier user
     # supplier_user = User.objects.create_user(username='Արտադրամաս', password='artadramas1258')
