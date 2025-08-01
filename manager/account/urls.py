@@ -9,6 +9,8 @@ from tables.views import (
     writing_big_tables
     )
 
+from .calendar import non_working_days_view
+
 from tables.messages import (
     create_announcement_view,
     recent_messages,
@@ -132,5 +134,7 @@ urlpatterns = [
     path('storage/reg', register_elements, name="storage_reg"),
     path('storage/edit_element/<int:element_id>/', edit_elements, name="edit_element"),
     path('storage/confirm_tmp_val/<int:tmp_el_id>/', confirm_tmp_val, name="confirm_tmp_val"),
+
+    path('calendar/', non_working_days_view, name='calendar'),
 
 ]

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block 'links' %}
+    <link rel="stylesheet" href="{% static 'tables/home.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .non-working-day {
+            background-color: #ffdddd !important;
+            color: red !important;
+        }
+    </style>
+{% endblock %}
+
+{% block 'title' %}
+    <title>Non-working Day Calendar</title>
+{% endblock %}
+
+{% block 'body' %}
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Ընտրել ոչ աշխատանքային օր</h2>
+    <br><br>
+    <form method="post" style="display: inline-block; padding: 30px; border: 2px solid #ccc; border-radius: 15px; background: #f9f9f9;">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px;">
+            <input type="text" id="calendar" name="selected_date" required hidden>
+            <div id="inline-calendar"></div>
+        </div>
+        <button type="submit" style="padding: 12px 25px; font-size: 18px; border-radius: 8px;">Պահպանել</button>
+    </form>
+
+    <p style="margin-top: 20px; color: red;">Կարմիրով նշված օրերը ոչ աշխատանքային են</p>
+</div>
+{% endblock %}
+
+{% block 'scripts' %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    const nonWorkingDays = {{ non_working_days|safe }};
+
+    flatpickr("#inline-calendar", {
+        inline: true,
+        dateFormat: "Y-m-d",
+        onDayCreate: function(_, __, ___, dayElem) {
+            const date = dayElem.dateObj.toLocaleDateString('en-CA');  // ✅ Local date format
+            if (nonWorkingDays.includes(date)) {
+                dayElem.classList.add('non-working-day');
+            }
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+            document.getElementById('calendar').value = dateStr;
+        }
+    });
+</script>
+{% endblock %}
