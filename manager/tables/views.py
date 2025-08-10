@@ -193,7 +193,7 @@ def save_table_data(request):
                 for row in data:
                     if row['productCount'] == '':
                         row['productCount'] = 0
-                    update_or_create_tmp_value(row['productName'], date, int(row['productCount']))
+                    update_or_create_tmp_value(row['productName'], date, -int(row['productCount']))
 
                     supTot = items.get(productName=row['productName']).supPrice * int(row['productCount'])
                     table_item = TableItem.objects.create(

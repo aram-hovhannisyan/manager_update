@@ -15,28 +15,29 @@ from tables.models import ItemsModel
 def update_or_create_tmp_value(element_name, date, new_val):
     try:
         element = Storage_Element.objects.get(element_name=element_name)
+        refresh_storage_element(element.id, element.count + new_val)
     except Storage_Element.DoesNotExist:
         return {"error": "Element with that name not found"}
+     
+    # try:
+    #     # print("Tmp Element Exists!!!")
+    #     obj = Tmp_Elements_Values.objects.get(element=element, date=date)
+    #     obj.tmp_val += new_val
+    #     obj.save()
+    #     created = False
+    # except:
+    #     # print("new Tmp Element created!!!")
+    #     obj = Tmp_Elements_Values.objects.create(
+    #         element=element,
+    #         date=date,
+    #         tmp_val=element.count + new_val
+    #     )
+    #     created = True
 
-    try:
-        # print("Tmp Element Exists!!!")
-        obj = Tmp_Elements_Values.objects.get(element=element, date=date)
-        obj.tmp_val += new_val
-        obj.save()
-        created = False
-    except:
-        print("new Tmp Element created!!!")
-        obj = Tmp_Elements_Values.objects.create(
-            element=element,
-            date=date,
-            tmp_val=element.count + new_val
-        )
-        created = True
-
-    return {
-        "status": "created" if created else "updated",
-        "value": obj.tmp_val
-    }
+    # return {
+    #     "status": "created" if created else "updated",
+    #     "value": obj.tmp_val
+    # }
 
 @employee_required
 def edit_elements(request, element_id):

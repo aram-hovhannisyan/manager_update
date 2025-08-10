@@ -1,0 +1,26 @@
+<!-- 
+<table>
+    <thead>
+        <tr>
+            <th>Ապրանք</th>
+            <th>Նոր Քանակ</th>
+            <th>Հաստատում</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in tmp_values %}
+        {% if row.element.count|abs_sub:row.tmp_val != 0 %}
+            <tr data-id="{{ row.id }}">
+                <td>{{ row.element.element_name }}</td>
+                <td class="editable" data-field="element_name">
+                    {{ row.element.count }} => {{ row.tmp_val }} ({{ row.element.count|abs_sub:row.tmp_val }})
+                </td>
+                <td>
+                    <a href="{%url 'confirm_tmp_val' row.id %}"><button id="saveButton">Հաստատել</button></a>
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+<br><br><br> -->
