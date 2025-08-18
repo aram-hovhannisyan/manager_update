@@ -2792,7 +2792,7 @@ def endorseChange(request, item_id):
     glob_debt.save()
     latest_global_debt.delete()
 
-    update_or_create_tmp_value(item.product_name, item.table.dateOfCreating, item.product_count - tochange_item.newCount)
+    # update_or_create_tmp_value(item.product_name, item.table.dateOfCreating, item.product_count - tochange_item.newCount)
 
     item.product_count = tochange_item.newCount
     item.total_price = tochange_item.newTotal
@@ -2954,8 +2954,10 @@ def customerTables(request, user_id):
             customer=user,
             date=single_debt_array[0]
         )
+        print(old_debt, "aram")
     except:
         old_debt = Old_debt.objects.none()
+        print(single_debt_array[0], 'blya')
 
     try:
         globalDebt = Global_Debt.objects.filter(customer=user).latest('timeOfCreating')
