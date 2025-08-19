@@ -11,7 +11,18 @@
 {% endblock %}
 
 {% block 'body' %}
-
+<br><br><br>
+<div class="table-heading-div">
+    <a
+    href="{% url 'customersforadmin' %}"
+    style="
+      text-decoration: none;
+      color: black;
+    "
+    >
+    <h1 style="width: auto;">Դպրցներ</h1>
+    </a>
+  </div>   <br><br><br>
 <form method="POST" id="addProductForm">
     {% csrf_token %}
     <div id="addProductDiv" >

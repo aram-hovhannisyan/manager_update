@@ -124,7 +124,7 @@ customersPasswords = [
 # suppliers = ['Արտադամաս']
 
 def create_users():
-    pass
+    # pass
     # aram_admin = User.objects.create_superuser(username = 'aram', password= 'aramhovhannisyan')
     # aram_admin.save()
 
@@ -151,11 +151,14 @@ def create_users():
     #     customer_user.is_customer = True
     #     customer_user.save()
 
-    # supplier_user = User.objects.create_user(username='Գրենական', password='grenakan5864')
-    # supplier_user.is_supplier = True
-    # supplier_user.save()
-
-
+    supplier_user = User.objects.create_user(username='Հայկ', password='hayk1352pass')
+    supplier_user.is_supplier = True
+    supplier_user.save()
+    print("Հայկ --- hayk1352pass")
+    supplier_user = User.objects.create_user(username='Ռաֆո', password='rafo7931pass')
+    supplier_user.is_supplier = True
+    supplier_user.save()
+    print("Ռաֆո --- rafo7931pass")
 
     # Create an employee user
     # employee_user = User.objects.create_user(username='Վարդգես', password='vardgespassword1234')

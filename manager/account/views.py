@@ -97,7 +97,10 @@ def login_view(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
-            if user is not None and user.is_admin:
+            if user is not None and user.is_employee:
+                login(request, user)
+                return redirect('employee')           
+            elif user is not None and user.is_admin:
                 login(request, user)
                 return redirect('adminpage')
             elif user is not None and user.is_customer:
@@ -2359,9 +2362,9 @@ def main_items_api(request):
         'Դավիթ','Օհան','Գ.4-րդ', 'Գ.ավագ', 'Արա','Կամո','Գանձակ', 'Սարուխան','Էրանոս','Լիճք', 'Մ.1ին',
         'Մ.ավագ', 'Զոլ.2րդ', 'Զոլ.1ին', 'Ծովինար'
     ]
-    uniq = ItemsModel.uniqueProductNames(None).filter(supplier__in=['Արտադրամաս', 'Փուռ','Կիրովական'])
+    uniq = ItemsModel.uniqueProductNames(None).filter(supplier__in=['Արտադրամաս',"Ռաֆո", "Հայկ",'Փուռ','Կիրովական'])
     suppliers = []
-    for i in ['Արտադրամաս','Փուռ','Կիրովական']:
+    for i in ['Արտադրամաս',"Ռաֆո", "Հայկ",'Փուռ','Կիրովական']:
         suppliers.append(User.objects.get(username=i))
     tableRows = BigTableRows.objects.filter(supplier__in=suppliers)
     bigTables = BigTable.objects.filter(supplier__in=suppliers)
@@ -4223,3 +4226,7 @@ def writing_items_api(request):
 
     return JsonResponse(response_data, safe=False)
 
+
+@employee_required
+def product_controll_page(request):
+    return 

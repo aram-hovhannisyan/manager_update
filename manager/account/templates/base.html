@@ -37,8 +37,8 @@
                         {% endif %}
                     {% endblock %}
                 {% if user.is_admin %}
-                    <a href="{% url 'adminpage' %}">Գլխավոր</a>
-                    <a href="{% url 'customersforadmin' %}">Հաճախորդներ</a>
+                    <a href="{% url 'employee' %}">Գլխավոր</a>
+                    <!-- <a href="{% url 'customersforadmin' %}">Հաճախորդներ</a> -->
                 {% elif user.is_employee %}
                     <a href="{% url 'employee' %}">Գլխավոր</a>
                 {% elif user.is_customer %}
